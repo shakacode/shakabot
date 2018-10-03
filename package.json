@@ -5,7 +5,6 @@
   "author": "Mario Perez <mapreal19@gmail.com>",
   "description": "A simple helpful robot for your Company",
   "dependencies": {
-    "heroku-client": "^3.0.6",
     "hubot": "^3.1.1",
     "hubot-diagnostics": "^1.0.0",
     "hubot-google-images": "^0.2.7",
