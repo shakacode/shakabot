@@ -22,6 +22,9 @@ You can start shakabot locally by running:
 
     % bin/hubot
 
+If you want to test locally with slack:
+    % HUBOT_SLACK_TOKEN=xoxb-SLACK-TOCKEN ./bin/hubot --adapter slack
+
 You'll see some start up output and a prompt:
 
     [Sat Feb 28 2015 12:38:27 GMT+0000 (GMT)] INFO Using default redis on localhost:6379
