@@ -33,11 +33,11 @@ Then you can interact with shakabot by typing `shakabot help`.
     shakabot animate me <query> - The same thing as `image me`, except adds [snip]
     shakabot help - Displays all of the help commands that shakabot knows about.
     ...
-    
+
 ### Running in Slack
 
 If you want to test locally with slack:
-    
+
     % HUBOT_SLACK_TOKEN=xoxb-SLACK-TOCKEN ./bin/hubot --adapter slack
 
 ## Persistence
@@ -57,6 +57,10 @@ from `external-scripts.json` and you don't need to worry about redis at all.
 ## Running Heroku commands
 
 For running Heroku commands within a shell script we use the following buildpack: https://github.com/heroku/heroku-buildpack-cli
+
+## Running AWS commands
+
+For running AWS commands within a shell script we use the following buildpack: https://github.com/heroku/heroku-buildpack-awscli
 
 ## Uptime activity
 
