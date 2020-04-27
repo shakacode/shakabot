@@ -21,7 +21,7 @@ available, etc!
 ## Running shakabot Locally
 
 You can test your hubot by running the following, however some plugins will not
-behave as expected unless the [environment variables](#configuration) they rely
+behave as expected unless the environment variables they rely
 upon have been set.
 
 You can start shakabot locally by running:
@@ -39,6 +39,12 @@ Then you can interact with shakabot by typing `shakabot help`.
     shakabot animate me <query> - The same thing as `image me`, except adds [snip]
     shakabot help - Displays all of the help commands that shakabot knows about.
     ...
+
+### Environment variables
+
+- For local ruby scripts testing use `.env` (use values from prod where needed)
+- After updating `.env`, run `dotenv -t .env` this will create commitable template
+- For prod, setup via heroku env
 
 ### Running in Slack
 
