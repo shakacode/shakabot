@@ -12,6 +12,7 @@ PRODUCTION='hichee-production'
 
 heroku addons:create heroku-postgresql:standard-2 --as NEW_DATABASE --fork $PRODUCTION::DATABASE_URL --app $STAGING --fast
 heroku pg:wait --app $STAGING
+heroku ps:wait --app $STAGING
 
 set +x
 ADDONS=$(heroku addons --json --app $STAGING)
