@@ -12,13 +12,19 @@ PRODUCTION='hichee-production'
 
 heroku addons:create heroku-postgresql:standard-2 --as NEW_DATABASE --fork $PRODUCTION::DATABASE_URL --app $STAGING --fast
 heroku pg:wait --app $STAGING
-heroku ps:wait --app $STAGING
 
 set +x
+
+while [ "$(heroku config:get NEW_DATABASE_URL -a hichee-staging)" == ''  ]; do
+  echo "Wating for NEW_DATABASE_URL"
+  sleep 5
+done
+
 ADDONS=$(heroku addons --json --app $STAGING)
 NEW_DB=$(echo $ADDONS | ruby ./scripts/addon_from_attachment.rb NEW_DATABASE)
 OLD_DB=$(echo $ADDONS | ruby ./scripts/addon_from_attachment.rb DATABASE)
 NEW_DB_NAME=$(heroku config:get NEW_DATABASE_URL --app $STAGING | awk -F '/' '{print $NF}')
+
 set -x
 
 heroku pg:psql --app $STAGING NEW_DATABASE --command "ALTER DATABASE ${NEW_DB_NAME} SET jit=off;"
