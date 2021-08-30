@@ -15,8 +15,8 @@ heroku pg:wait --app $STAGING
 
 set +x
 ADDONS=$(heroku addons --json --app $STAGING)
-NEW_DB=$(echo $ADDONS | ruby addon_from_attachment.rb NEW_DATABASE)
-OLD_DB=$(echo $ADDONS | ruby addon_from_attachment.rb DATABASE)
+NEW_DB=$(echo $ADDONS | ruby ./scripts/addon_from_attachment.rb NEW_DATABASE)
+OLD_DB=$(echo $ADDONS | ruby ./scripts/addon_from_attachment.rb DATABASE)
 NEW_DB_NAME=$(heroku config:get NEW_DATABASE_URL --app $STAGING | awk -F '/' '{print $NF}')
 set -x
 
