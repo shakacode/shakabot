@@ -13,13 +13,11 @@ module.exports = robot => {
     build.stdout.on('data', data => robot.messageRoom('#bot-log', data.toString()));
     build.stderr.on('data', data => robot.messageRoom('#bot-log', data.toString()));
   });
-  robot.respond(/hc:autoclose-toggl/i, response => {
-    response.send('HC autoclose toggl: start...');
-    build = spawn('bundle', ['exec', 'ruby', 'scripts/autoclose_toggl.rb']);
+  robot.respond(/hc:old-sync-staging-db-from-production/i, response => {
+    response.send('Old DB staging sync: start...');
+    build = spawn('/bin/bash', ['./scripts/old_sync_staging_db_from_production.sh']);
 
-    build.stdout.on('close', () => response.send('HC autoclose toggl: done'));
-    build.stdout.on('data', data => response.send(data.toString()));
-    build.stderr.on('data', data => response.send(data.toString()));
+    build.stdout.on('close', () => response.send('Old DB staging sync: done'));
     build.stdout.on('data', data => robot.messageRoom('#bot-log', data.toString()));
     build.stderr.on('data', data => robot.messageRoom('#bot-log', data.toString()));
   });
