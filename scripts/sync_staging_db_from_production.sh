@@ -23,12 +23,16 @@ done
 ADDONS=$(heroku addons --json --app $STAGING)
 NEW_DB=$(echo $ADDONS | ruby ./scripts/addon_from_attachment.rb NEW_DATABASE)
 OLD_DB=$(echo $ADDONS | ruby ./scripts/addon_from_attachment.rb DATABASE)
-NEW_DB_NAME=$(heroku config:get NEW_DATABASE_URL --app $STAGING | awk -F '/' '{print $NF}')
+NEW_DB_URL=$(heroku config:get NEW_DATABASE_URL --app $STAGING)
+NEW_DB_NAME=$(echo $NEW_DB_URL | awk -F '/' '{print $NF}')
 
 set -x
 
 heroku pg:psql --app $STAGING NEW_DATABASE --command "ALTER DATABASE ${NEW_DB_NAME} SET jit=off;"
 heroku pg:psql --app $STAGING NEW_DATABASE --command 'ANALYZE VERBOSE;'
+
+# run migrations over new forked database
+heroku run --env DATABASE_URL=$NEW_DB_URL rails db:migrate --app $STAGING
 
 heroku maintenance:on --app $STAGING
 heroku ps:scale web=0 worker=0 --app $STAGING
