@@ -11,7 +11,7 @@ if [ "$NEW_DB" != ''  ]
 then
   heroku addons:destroy $NEW_DB --confirm $STAGING --app $STAGING
   sleep 5
-done
+fi
 
 # enable per line tracking
 set -x
