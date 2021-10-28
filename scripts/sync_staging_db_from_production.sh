@@ -1,17 +1,26 @@
-# enable raise on any error
-set -e
-
 # set timestamps for tracking
 PS4='\n+\t '
-
-# enable per line tracking
-set -x
 
 STAGING='hichee-staging'
 PRODUCTION='hichee-production'
 
+# delete database if it somehow exists
+ADDONS=$(heroku addons --json --app $STAGING)
+NEW_DB=$(echo $ADDONS | ruby ./scripts/addon_from_attachment.rb NEW_DATABASE)
+if [ "$NEW_DB" != ''  ]
+then
+  heroku addons:destroy $NEW_DB --confirm $STAGING --app $STAGING
+  sleep 5
+done
+
+# enable per line tracking
+set -x
+
 heroku addons:create heroku-postgresql:standard-2 --as NEW_DATABASE --fork $PRODUCTION::DATABASE_URL --app $STAGING --fast
 heroku pg:wait --app $STAGING
+
+# enable raise on any error (only after pg:wait as it)
+set -e
 
 set +x
 
